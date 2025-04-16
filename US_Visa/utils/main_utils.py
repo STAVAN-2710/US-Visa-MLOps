@@ -73,6 +73,7 @@ def load_object(file_path: str) -> object:
         logging.error("Error loading object", exc_info=True)
         raise USvisaException(e, sys) from e
     
+    
 def save_numpy_array_data(file_path: str, array: np.array):
     """
     Parameters:
@@ -93,6 +94,7 @@ def save_numpy_array_data(file_path: str, array: np.array):
         logging.error("Error saving numpy array data", exc_info=True)
         raise USvisaException(e, sys) from e
     
+    
 def load_numpy_array_data(file_path: str) -> np.array:
     """
         Parameters:
@@ -109,4 +111,55 @@ def load_numpy_array_data(file_path: str) -> np.array:
     except Exception as e:
         # Wrap and re-raise any exceptions using the custom USvisaException for unified error logging
         logging.error("Error loading numpy array data", exc_info=True)
+        raise USvisaException(e, sys) from e
+    
+    
+def save_object(file_path: str, obj: object) -> None:
+    # Log the entry into the save_object function for debugging purposes.
+    logging.info("Entered the save_object method of utils")
+    try:
+        # Ensure the directory exists where the file will be saved.
+        # os.makedirs creates the directories if they don't exist; exist_ok=True avoids errors if they already do.
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+        
+        # Open the file in binary write mode so that the object can be serialized.
+        with open(file_path, "wb") as file_obj:
+            # Serialize the object to the file using dill.
+            dill.dump(obj, file_obj)
+        
+        # Log that the function has completed successfully.
+        logging.info("Exited the save_object method of utils")
+
+    except Exception as e:
+        # In case of any exceptions, raise a custom USvisaException with system traceback details.
+        logging.error("Error saving object", exc_info=True)
+        raise USvisaException(e, sys) from e
+    
+    
+def drop_columns(df: DataFrame, cols: list) -> DataFrame:
+    """
+    Drop the specified columns from a pandas DataFrame.
+    Parameters:
+    - df: pandas DataFrame from which columns will be dropped.
+    - cols: list of column names to be removed from the DataFrame.
+
+    Returns:
+    - A DataFrame with the specified columns removed.
+    """
+    # Log the entry into the drop_columns function.
+    logging.info("Entered drop_columns method of utils")
+
+    try:
+        # Drop the specified columns from the DataFrame.
+        # The axis=1 argument specifies that the operation is column-wise.
+        df = df.drop(columns=cols, axis=1)
+
+        # Log that the function completed without issues.
+        logging.info("Exited the drop_columns method of utils")
+        
+        # Return the resulting DataFrame.
+        return df
+    except Exception as e:
+        # On encountering an error, raise a custom exception with additional debugging information.
+        logging.error("Error dropping columns", exc_info=True)
         raise USvisaException(e, sys) from e
