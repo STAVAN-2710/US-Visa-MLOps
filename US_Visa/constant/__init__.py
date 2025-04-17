@@ -23,6 +23,13 @@ TEST_FILE_NAME: str = "test.csv"     # File name for the testing dataset generat
 FILE_NAME: str = "usvisa.csv"        # Raw data file name that may be ingested from MongoDB before processing.
 MODEL_FILE_NAME = "model.pkl"        # File name for the serialized model artifact post training.
 
+
+TARGET_COLUMN = "case_status"
+CURRENT_YEAR = date.today().year
+PREPROCSSING_OBJECT_FILE_NAME = "preprocessing.pkl"
+SCHEMA_FILE_PATH = os.path.join("config", "schema.yaml")
+
+
 """
 Data Ingestion related constants
 This section defines variables used specifically during the data ingestion process.
@@ -33,3 +40,9 @@ DATA_INGESTION_FEATURE_STORE_DIR: str = "feature_store"  # Subdirectory to store
 DATA_INGESTION_INGESTED_DIR: str = "ingested"        # Subdirectory to store the final output of the ingested data (e.g., after train/test split).
 DATA_INGESTION_TRAIN_TEST_SPLIT_RATIO: float = 0.2   # Ratio defining the fraction of data reserved for testing; facilitates consistent train/test splits.
 
+"""
+Data Validation realted contant start with DATA_VALIDATION VAR NAME
+"""
+DATA_VALIDATION_DIR_NAME: str = "data_validation"
+DATA_VALIDATION_DRIFT_REPORT_DIR: str = "drift_report"
+DATA_VALIDATION_DRIFT_REPORT_FILE_NAME: str = "report.yaml"
